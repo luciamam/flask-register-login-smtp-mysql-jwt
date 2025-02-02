@@ -1,4 +1,4 @@
-from flask import Flask,render_template,redirect,url_for
+from flask import Flask,render_template,redirect,url_for,request
 
 
 
@@ -14,9 +14,18 @@ def home():
 
     return redirect(url_for('login'))
 
-@app.route('/register')
+@app.route('/register',methods=['GET','POST'])
 def register():
-    return "soy la ruta regsiter"
+    if request.method=='POST':
+        name=request.form['name']
+        fullname=request.form['fullname']
+        email=request.form['email']
+        password=request.form['password']
+
+        return "procesar estos datos "
+    
+    return render_template('RegisterTemplate.html')
+
 
 
 @app.route('/perfil')
@@ -25,9 +34,15 @@ def perfil():
 
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET','POST'])
 def login():
-    return "soy la ruta login"
+    if request.method=='POST':
+        email=request.form['email']
+        password=request.form['password']
+
+        #vamos a comprobar que el usuario existe en la base de datos 
+        return "usuario existe"
+    return render_template('LoginTemplate.html')
 
 #manejar el el codigo 404
 
